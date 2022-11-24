@@ -1,35 +1,37 @@
 import { HttpClient } from '@angular/common/http';
+import { CoreEnvironment } from '@angular/compiler/src/compiler_facade_interface';
 import { Injectable } from '@angular/core';
 import { User } from '../app/model';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserServiceService {
 
-  user: User
-  API = "https://gorest.co.in";
-  access_Token = 'e2c4b24a7f813a70903bbdef88187c0ccc861372cba013f0ec2f5ec94ff237b3'
+  user: User;
+  apiUrl = environment.API_BASE_URL;
+  accessToken = environment.ACCESS_TOKEN;
 
   constructor(private http: HttpClient) { }
 
   public getUsers() {
-    return this.http.get<User[]>(this.API + '/public/v2/users?access-token='+ this.access_Token);
+    return this.http.get<User[]>(this.apiUrl + '/public/v2/users?access-token='+ this.accessToken);
   }
 
   public getUserById(userId) {
-    return this.http.get<User>(this.API + '/public/v2/users/'+ userId +'?access-token='+ this.access_Token);
+    return this.http.get<User>(this.apiUrl + '/public/v2/users/'+ userId +'?access-token='+ this.accessToken);
   }
 
   public createUser(userData) {
-    return this.http.post<User>(this.API + '/public/v2/users?access-token='+ this.access_Token, userData);
+    return this.http.post<User>(this.apiUrl + '/public/v2/users?access-token='+ this.accessToken, userData);
   }
 
   public updateUser(userData) {
-    return this.http.patch<User>(this.API +'/public/v2/users/'+ userData.id +'?access-token='+ this.access_Token,userData);
+    return this.http.patch<User>(this.apiUrl +'/public/v2/users/'+ userData.id +'?access-token='+ this.accessToken,userData);
   }
 
   public deleteUser(userId) {
-    return this.http.delete(this.API +'/public/v2/users/'+ userId +'?access-token='+ this.access_Token);
+    return this.http.delete(this.apiUrl +'/public/v2/users/'+ userId +'?access-token='+ this.accessToken);
   }
 }

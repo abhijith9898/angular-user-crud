@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService,ConfirmationService } from 'primeng/api';
 import { User } from '../app/model';
 import { UserServiceService } from '..//app/user-service.service';
+import { MaxLengthValidator } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -16,16 +17,49 @@ export class AppComponent implements OnInit {
   user: User = {};
   showForm:boolean = false;
   formHeader: string;
+  genderList: { name: string; code: string; }[];
+  selectedGender:any;
+  statusList: { name: string; code: string; }[];
+  statusOptions = {
+    active: 'active', 
+    inactive: 'inactive',
+  }
   constructor(private messageService: MessageService, private userServiceService:UserServiceService,private confirmationService:ConfirmationService) { }
 
   ngOnInit() {
     this.getUsersList();
+    this.genderList = [
+      {
+        name: "Male",
+        code: "male"
+      },
+      {
+        name: "Female",
+        code: "female"
+      }];
+    this.statusList = [
+      {
+        name: "Active",
+        code: "active"
+      },
+      {
+        name: "Inactive",
+        code: "inactive"
+      }]
   }
 
   openAddNew(){
     this.user = {};
     this.formHeader = "ADD USER";
     this.showForm = true;
+  }
+
+  onGenderChange(user){
+    console.log("gender",user.gender);
+  }
+
+  onStatusChange(user){
+    console.log("status",user.status);
   }
 
   save(){

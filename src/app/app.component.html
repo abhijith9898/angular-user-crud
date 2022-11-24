@@ -1,65 +1,74 @@
 <p-toast baseZIndex="9999999"></p-toast>
 <p-confirmDialog [style]="{width: '50vw'}" header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 <p-dialog header={{formHeader}} [(visible)]="showForm" [draggable]="false" blockScroll="true" appendTo="body"
-    [modal]="true" [style]="{ width: '40vw' }" [responsive]="true">
+    [modal]="true" [responsive]="true">
     
-    <div class="p-col-12 form-align">
-        <div class="p-field p-grid">
-            <label for="name" class="p-col-4 label-width">Name</label>
+    <div class="p-grid">
+        <div class="p-col-6">
+            <label for="name" class="p-col-4">Name<span class="imp-star"> *</span></label>
             <div class="p-col-8">
-                <input id="name" placeholder="Name" [(ngModel)]="user.name" type="text" pInputText required> 
+                <input id="name" placeholder="Name" [style]="{'width':'100%'}" [(ngModel)]="user.name" type="text" pInputText required> 
             </div>
         </div>
-        <div class="p-field p-grid">
-            <label for="email" class="p-col-4 label-width">Email</label>
+        <div class="p-col-6">
+            <label for="email" class="p-col-4">Email<span class="imp-star"> *</span></label>
             <div class="p-col-8">
-                <input id="email" placeholder="Email" [(ngModel)]="user.email" type="text" pInputText required> 
+                <input id="email" placeholder="Email" [style]="{'width':'100%'}" [(ngModel)]="user.email" type="text" pInputText required> 
             </div>
         </div>
-        <div class="p-field p-grid">
-            <label for="gender" class="p-col-4 label-width">Gender</label>
+        <div class="p-col-6">
+            <label for="gender" class="p-col-4">Gender<span class="imp-star"> *</span></label>
             <div class="p-col-8">
-                <input id="gender" placeholder="Gender" [(ngModel)]="user.gender" type="text" pInputText required> 
+                <p-dropdown [options]="genderList" [style]="{'width':'100%'}" (onChange)="onGenderChange(user)" placeholder="Choose" [(ngModel)]="user.gender" 
+                    optionLabel="name" optionValue="code" required>                    
+                </p-dropdown> 
             </div>
         </div>
-        <div class="p-field p-grid">
-            <label for="status" class="p-col-4 label-width">Status</label>
+        <div class="p-col-6">
+            <label for="status" class="p-col-4">Status<span class="imp-star"> *</span></label>
             <div class="p-col-8">
-                <input id="status" placeholder="Status" [(ngModel)]="user.status" type="text" pInputText required> 
+                <p-dropdown [options]="statusList" [style]="{'width':'100%'}" (onChange)="onGenderChange(user)" placeholder="Choose" [(ngModel)]="user.status" 
+                    optionLabel="name" optionValue="code" required>                    
+                </p-dropdown>  
             </div>
         </div>
+    </div>
+    
+    <div class="p-col-12">        
         <div class="p-grid p-field form-button-align">
-            <button pButton pRipple label="CANCEL" icon="pi pi-times" class="p-button-text p-mr-2" 
+            <button pButton pRipple label="CANCEL"  style="color: #82b440;" icon="pi pi-times" class="p-button-text p-mr-2" 
                 (click)="cancel()">
             </button>
-            <button pButton pRipple label="SAVE" icon="pi pi-check" class="p-button-primary p-mr-2" 
+            <button pButton pRipple label="SAVE" style="background-color: #82b440;border:#82b440;" icon="pi pi-check" class="p-button-primary p-mr-2" 
                 (click)="save()">
             </button>
         </div>
     </div>
 </p-dialog>
 
+<div class="header">
+    <a href="#default" class="logo">USERS</a>
+    <div class="header-right">
+        <i class="pi pi-bell p-mr-4 p-text-secondary" style="font-size: 1.5rem" value="2"></i>
+        <p-avatar icon="pi pi-user" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
+        <span style="color: silver;">Admin</span>
+    </div>
+</div>
+
 <div class="card">
     <div class="p-grid">
-        <div class="p-col-2"></div>
-        <div class="p-col-8">
-            <h3>USERS</h3>
-            <div class="add-button-align">
-                <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" 
-                (click)="openAddNew()">
-            </button>
-            </div>            
-        </div>
-        <div class="p-col-2"></div>
-    </div>
-    <div class="p-grid">
-        <div class="p-col-2"></div>
-        <div class="p-col-8">
-            <div class="card">
-                
-                <p-table [value]="userData" [paginator]="true" [rows]="5" dataKey="id">
+        <div class="p-col-1"></div>
+        <div class="p-col-10">
+            <div class="card"> 
+                <div class="add-button-align">
+                    <button pButton pRipple label="New" style="background-color: #F03737;border:#F03737;" icon="pi pi-plus" class="p-button-success p-mr-2" 
+                    (click)="openAddNew()">
+                    </button>
+                </div>              
+                <p-table [value]="userData"  styleClass="p-datatable-striped" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" dataKey="id">
                     <ng-template pTemplate="header">
                         <tr>
+                            <th pSortableColumn="id" class="coloum-width">ID <p-sortIcon field="id"></p-sortIcon></th>
                             <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
                             <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
                             <th pSortableColumn="gender" class="coloum-width">Gender <p-sortIcon field="gender"></p-sortIcon></th>
@@ -69,10 +78,11 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-user let-editing="editing" let-ri="rowIndex">
                         <tr class="word-wrap">
+                            <td>{{user.id}}</td>
                             <td>{{user.name}}</td>
                             <td>{{user.email}}</td>
-                            <td>{{user.gender}}</td>              
-                            <td>{{user.status}}</td>
+                            <td><span class="gender-case">{{user.gender}}</span></td>              
+                            <td><span [class]="'status-badge status-' + statusOptions[user.status?.trim()?.toLowerCase()]">{{user.status}}</span></td>
                             <td class="row-button-align">
                                 <button pButton pRipple type="button" icon="pi pi-pencil"
                                     (click)="onClickEdit(user.id)" class="p-button-rounded p-button-text">
@@ -86,6 +96,10 @@
                 </p-table>
             </div>
         </div>
-        <div class="p-col-2"></div>
+        <div class="p-col-1"></div>
     </div> 
 </div>
+
+<div class="footer">
+    <p></p>
+  </div>

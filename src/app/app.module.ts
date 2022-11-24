@@ -13,6 +13,10 @@ import {TableModule} from 'primeng/table';
 import {ToastModule} from 'primeng/toast';
 import {DialogModule} from 'primeng/dialog';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {DropdownModule} from 'primeng/dropdown';
+import {AvatarModule} from 'primeng/avatar';
+import {AvatarGroupModule} from 'primeng/avatargroup';
+import { ChipModule } from 'primeng/chip';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,10 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
   ],
   imports: [
     BrowserModule,
+    AvatarModule,
     AppRoutingModule,
+    AvatarGroupModule,
+    ChipModule,
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
@@ -34,6 +41,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     ToastModule,
     DialogModule,
     ConfirmDialogModule,
+    DropdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]
