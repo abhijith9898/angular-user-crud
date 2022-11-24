@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PrimeNGConfig } from 'primeng/api';
 import { MessageService,ConfirmationService } from 'primeng/api';
 import { User } from '../app/model';
 import { UserServiceService } from '..//app/user-service.service';
@@ -16,10 +15,9 @@ export class AppComponent implements OnInit {
   currentUserId: any;
   user: User = {};
   showAddForm:boolean = false;
-  constructor(private primengConfig: PrimeNGConfig, private messageService: MessageService, private userServiceService:UserServiceService,private confirmationService:ConfirmationService) { }
+  constructor(private messageService: MessageService, private userServiceService:UserServiceService,private confirmationService:ConfirmationService) { }
 
   ngOnInit() {
-    this.primengConfig.ripple = true;
     this.getUsersList();
   }
 
@@ -75,9 +73,14 @@ export class AppComponent implements OnInit {
     })
   }
 
-  onClickEdit(user: User) {
-    this.user = {...user};
-    this.showAddForm = true;
+  onClickEdit(userId) {
+    this.userServiceService.getUserById(userId).subscribe((result) => {
+      console.log("res user",result);
+      this.user = result;
+      this.showAddForm = true;
+    },(error) => {
+      console.log("error",error)
+    })        
   }
 
   onClickDelete(user: User) {

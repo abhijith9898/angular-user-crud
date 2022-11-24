@@ -2,3 +2,33 @@
 @import "../node_modules/primeng/resources/primeng.min.css";
 @import "../node_modules/primeflex/primeflex.scss";
 @import "../node_modules/primeicons/primeicons.css";
+
+.form-align{
+    justify-content: center;
+    display: grid;
+}
+
+.form-button-align{
+    justify-content: end;
+}
+
+.add-button-align{
+    display: flex;
+    justify-content: right;
+}
+
+.word-wrap{
+    word-wrap: break-word;
+}
+
+.row-button-align{
+    text-align:center
+}
+
+.coloum-width{
+    width:8rem
+}
+
+.label-width{
+    width:100px
+}

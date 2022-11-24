@@ -3,32 +3,32 @@
 <p-dialog header="ADD NEW USER" [(visible)]="showAddForm" [draggable]="false" blockScroll="true" appendTo="body"
     [modal]="true" [style]="{ width: '40vw' }" [responsive]="true">
     
-    <div class="p-col-12" style="justify-content: center;display: grid;">
+    <div class="p-col-12 form-align">
         <div class="p-field p-grid">
-            <label for="name" class="p-col-4" style="width:100px">Name</label>
+            <label for="name" class="p-col-4 label-width">Name</label>
             <div class="p-col-8">
                 <input id="name" placeholder="Name" [(ngModel)]="user.name" type="text" pInputText required> 
             </div>
         </div>
         <div class="p-field p-grid">
-            <label for="email" class="p-col-4" style="width:100px">Email</label>
+            <label for="email" class="p-col-4 label-width">Email</label>
             <div class="p-col-8">
                 <input id="email" placeholder="Email" [(ngModel)]="user.email" type="text" pInputText required> 
             </div>
         </div>
         <div class="p-field p-grid">
-            <label for="gender" class="p-col-4" style="width:100px">Gender</label>
+            <label for="gender" class="p-col-4 label-width">Gender</label>
             <div class="p-col-8">
                 <input id="gender" placeholder="Gender" [(ngModel)]="user.gender" type="text" pInputText required> 
             </div>
         </div>
         <div class="p-field p-grid">
-            <label for="status" class="p-col-4" style="width:100px">Status</label>
+            <label for="status" class="p-col-4 label-width">Status</label>
             <div class="p-col-8">
                 <input id="status" placeholder="Status" [(ngModel)]="user.status" type="text" pInputText required> 
             </div>
         </div>
-        <div class="p-grid p-field" style="justify-content: end;">
+        <div class="p-grid p-field form-button-align">
             <button pButton pRipple label="CANCEL" icon="pi pi-times" class="p-button-text p-mr-2" 
                 (click)="cancel()">
             </button>
@@ -44,7 +44,7 @@
         <div class="p-col-2"></div>
         <div class="p-col-8">
             <h3>USERS</h3>
-            <div style="display: flex;justify-content: right;">
+            <div class="add-button-align">
                 <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" 
                 (click)="openAddNew()">
             </button>
@@ -60,24 +60,26 @@
                 <p-table [value]="userData" [paginator]="true" [rows]="5" dataKey="id">
                     <ng-template pTemplate="header">
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Gender</th>
-                            <th>Status</th>
-                            <th style="width:8rem"></th>
+                            <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+                            <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+                            <th pSortableColumn="gender" class="coloum-width">Gender <p-sortIcon field="gender"></p-sortIcon></th>
+                            <th pSortableColumn="status" class="coloum-width">Status <p-sortIcon field="status"></p-sortIcon></th>
+                            <th class="coloum-width"></th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-user let-editing="editing" let-ri="rowIndex">
-                        <tr>
-                            <td style="word-wrap: break-word;">{{user.name}}</td>
-                            <td style="word-wrap: break-word;">{{user.email}}</td>
-                            <td  style="word-wrap: break-word;">{{user.gender}}</td>              
-                            <td  style="word-wrap: break-word;">{{user.status}}</td>
-                            <td style="text-align:center">
+                        <tr class="word-wrap">
+                            <td>{{user.name}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.gender}}</td>              
+                            <td>{{user.status}}</td>
+                            <td class="row-button-align">
                                 <button pButton pRipple type="button" icon="pi pi-pencil"
-                                    (click)="onClickEdit(user)" class="p-button-rounded p-button-text"></button>
+                                    (click)="onClickEdit(user.id)" class="p-button-rounded p-button-text">
+                                </button>
                                 <button pButton pRipple type="button" icon="pi pi-trash"
-                                    (click)="onClickDelete(user)" class="p-button-rounded p-button-text p-button-danger"></button>
+                                    (click)="onClickDelete(user)" class="p-button-rounded p-button-text p-button-danger">
+                                </button>
                             </td>
                         </tr>
                     </ng-template>

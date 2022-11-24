@@ -17,6 +17,10 @@ export class UserServiceService {
     return this.http.get<User[]>(this.API + '/public/v2/users?access-token='+ this.access_Token);
   }
 
+  public getUserById(userId) {
+    return this.http.get<User>(this.API + '/public/v2/users/'+ userId +'?access-token='+ this.access_Token);
+  }
+
   public createUser(userData) {
     return this.http.post<User>(this.API + '/public/v2/users?access-token='+ this.access_Token, userData);
   }
