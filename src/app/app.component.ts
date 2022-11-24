@@ -14,7 +14,8 @@ export class AppComponent implements OnInit {
   userData: User[];
   currentUserId: any;
   user: User = {};
-  showAddForm:boolean = false;
+  showForm:boolean = false;
+  formHeader: string;
   constructor(private messageService: MessageService, private userServiceService:UserServiceService,private confirmationService:ConfirmationService) { }
 
   ngOnInit() {
@@ -23,7 +24,8 @@ export class AppComponent implements OnInit {
 
   openAddNew(){
     this.user = {};
-    this.showAddForm = true;
+    this.formHeader = "ADD USER";
+    this.showForm = true;
   }
 
   save(){
@@ -34,7 +36,7 @@ export class AppComponent implements OnInit {
       else {
         this.userServiceService.createUser(this.user).subscribe((result) => {
           console.log("user created", result);
-          this.showAddForm = false;
+          this.showForm = false;
           this.messageService.add({ severity: 'success', detail: 'User Added Successfully'});
           this.getUsersList();
         },
@@ -48,7 +50,7 @@ export class AppComponent implements OnInit {
       else {
         this.userServiceService.updateUser(this.user).subscribe((result) => {
           console.log("user updated", result);
-          this.showAddForm = false;
+          this.showForm = false;
           this.messageService.add({ severity: 'success', detail: 'User Updated'});
           this.getUsersList();
         },
@@ -61,7 +63,7 @@ export class AppComponent implements OnInit {
   }
 
   cancel(){
-    this.showAddForm = false;
+    this.showForm = false;
   }
 
   getUsersList(){
@@ -74,10 +76,11 @@ export class AppComponent implements OnInit {
   }
 
   onClickEdit(userId) {
+    this.formHeader = "EDIT USER";
     this.userServiceService.getUserById(userId).subscribe((result) => {
       console.log("res user",result);
       this.user = result;
-      this.showAddForm = true;
+      this.showForm = true;
     },(error) => {
       console.log("error",error)
     })        
